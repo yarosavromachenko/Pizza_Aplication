@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}List of pizza!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {% for message in app.flashes('notice') %}
+            <div class="alert alert-success mt-4 mb-b">
+                {{message}}
+            </div>
+        {% endfor %}
+        {% for data in pizza_list %}
+            <div class="row">
+                <h2 class="mt-5 mb-5">List of Pizza</h2>
+                <div class="form-group">
+                    <h5>Pizza name:   -  {{data.name}}</h5>
+
+                </div>
+                <div class="form-group">
+                    <h5>Ingredients:</h5>
+                    <div class="list-group">
+                        {%for ingredient in data.ingredient%}
+                        <h5>{{ ingredient.name }} - {{ingredient.costprice}} Euro</h5>
+                        {%endfor%}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h5>Total price: {{ data.price }} Euro</h5>
+                </div>
+                <div class="form-group">
+                    <a class="btn btn-warning" href="{{ path('update',{'id':data.id}) }}">Update</a>
+                    <a class="btn btn-danger" href="{{ path('delete',{'id':data.id}) }}">Delete</a>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="form-group mt-5">
+            <a class="btn btn-info" href="{{ path('create') }}">Create pizza</a>
+            <a class="btn btn-success" href="{{ path('ingredient_list') }}">List of  Ingredient</a>
+        </div>
+    </div>
+{% endblock %}

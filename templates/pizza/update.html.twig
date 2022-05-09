@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Update pizza!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h3 class="mt-5 mb-5">Update Form</h3>
+        {% for message in app.flashes('notice')%}
+            <div class="alert alert-success">
+                {{message}}
+            </div>
+        {%endfor%}
+        <div class="col-md-6 offset-md-3">
+            {{ form_start(form) }}
+            <div class="form-group">
+                Pizza name:
+                {{ form_widget(form.name,{'attr':{'class':'form-control'}}) }}
+            </div>
+            <div class="form-group mt-2">
+                List of ingredients:
+                {{ form_widget(form.ingredient,{'attr':{'class':'list-group-item'}}) }}
+            </div>
+            <div class="form-group mt-2">
+                Total price:
+                {{ form_widget(form.price,{'attr':{'disabled':'disabled'}}) }} Euro
+            </div>
+            <div class="form-group">
+                <button class="btn btn-info mt-2 text-white">Update</button>
+                <a class="btn btn-danger mt-2" href="{{ path('home') }}">Back</a>
+            </div>
+            {{ form_end(form)}}
+        </div>
+    </div>
+</div>
+    <script>
+        var countChecked = function() {
+            var checkocke = $( "input:checked" );
+            let sum = 0.0;
+            if (checkocke.length > 0) {
+                for (let i=0; i<checkocke.length; i++) {
+                    sum += $(checkocke[i]).data('price')
+                }
+            }
+            var a = $("#pizza_form_price")
+            a.val(sum*1.5)
+        };
+        countChecked();
+
+        $( "input[type=checkbox]" ).on( "click", countChecked );
+    </script>
+{% endblock %}
